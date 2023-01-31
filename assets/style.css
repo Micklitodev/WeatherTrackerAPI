@@ -1,10 +1,23 @@
+:root {
+    --blue: rgb(24, 44, 100);
+    --navy: rgb(31, 57, 94);
+}
+
 
 header {
     color: white;
-    background-color: rgb(24, 44, 100);
+    background-color: var(--blue);
     height: 50px;
     font-size: 30px;
     
+}
+
+
+
+section .card {
+    background-color: var(--navy);
+    margin-left: 10px;
+    color: white;
 }
 
 
