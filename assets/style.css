@@ -5,6 +5,8 @@
 
 
 header {
+    display: flex;
+    justify-content: center;
     color: white;
     background-color: var(--blue);
     height: 50px;
@@ -13,10 +15,21 @@ header {
 }
 
 
+form {
+    float: left;
+    margin-top: 20px;
+    height: 550px;
+}
+
+main .card {
+    margin-left:10px;
+    margin-top: 20px;
+    height: 300px;
+}
 
 section .card {
     background-color: var(--navy);
-    margin-left: 10px;
+    margin-left: 15px;
     color: white;
 }
 

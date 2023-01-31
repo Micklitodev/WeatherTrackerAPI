@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const lat = 33.74;
   const lon = -84.38;
 
+
+ 
+
+
   const apiEngine = async () => {
     const path = "data/2.5/forecast";
     const queryParams = `?lat=${lat}&lon=${lon}&appid=${apiKey}`;
