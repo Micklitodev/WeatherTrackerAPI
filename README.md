@@ -2,12 +2,11 @@
 
 ## Link
 
-Click [- here -]() to go to the live link.
+Click [- here -](https://micklitodev.github.io/WeatherTrackerAPI/) to go to the live link.
 
 ## ScreenShot
 
-![Screenshot of live WeatherTrackerAPI App.]()
-![Screenshot two of live WeatherTrackerAPI App.]()
+![Screenshot of live WeatherTrackerAPI App.](./assets/images/WAPIss.png)
 
 ## Description
 
