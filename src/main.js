@@ -154,8 +154,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+
+  if(!localStorage.getItem(1)) {
+    searchHistoryBtn[1].textContent = localStorage.setItem(1, 'atlanta');
+    searchHistoryBtn[2].textContent = localStorage.setItem(2, 'miami');
+    searchHistoryBtn[3].textContent = localStorage.setItem(3, 'cancun');
+    searchHistoryBtn[4].textContent = localStorage.setItem(4, 'anchorage'); 
+    searchHistoryBtn[1].textContent = localStorage.getItem(1);
+    searchHistoryBtn[2].textContent = localStorage.getItem(2);
+    searchHistoryBtn[3].textContent = localStorage.getItem(3);
+    searchHistoryBtn[4].textContent = localStorage.getItem(4); 
+  } else {
+    searchHistoryBtn[1].textContent = localStorage.getItem(1);
+    searchHistoryBtn[2].textContent = localStorage.getItem(2);
+    searchHistoryBtn[3].textContent = localStorage.getItem(3);
+    searchHistoryBtn[4].textContent = localStorage.getItem(4); 
+    
+  }
+
   function searchHistory(city) {
     searchHistoryBtn[index].textContent = city;
+    localStorage.setItem(index, searchHistoryBtn[index].textContent);
     searchHistoryBtn[index].addEventListener("click", handleSearchEvent);
     if (index >= 4) {
       index = 1;

@@ -19,11 +19,24 @@ form {
   margin-left: 5px;
 }
 
+form .btn {
+  width: 186px;
+}
+
+form input {
+  margin-top: 5px;
+}
+
+#error-message {
+  display: none;
+  color: red;
+}
+
 .previous-search {
-  max-width: fit-content;
-  justify-content: center;
-  margin-top: 70px;
-  margin-left: 1px;
+  width: 203px;
+  margin-top: 50px;
+  border: solid grey;
+  padding: 5px;
 }
 
 .previous-search .btn {
