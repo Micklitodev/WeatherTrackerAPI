@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let temp = document.getElementById("main-card-temp");
   let wind = document.getElementById("main-card-wind");
   let humidity = document.getElementById("main-card-humidity");
+  let searchHistoryBtn = document.querySelectorAll(".btn");
+  let index = 1;
 
   const endpoint = "https://api.openweathermap.org/";
   const apiKey = "6f9ea20be5ffff67f64770cd3b4ad14c";
@@ -73,33 +75,46 @@ document.addEventListener("DOMContentLoaded", function () {
     let sectionHumidity = document.querySelectorAll(".section-card-humidity");
 
     let jsonResponse = await apiEngine();
-    let status = jsonResponse.list[0].weather[0].main;
-
-    if (status === "Clouds") {
-      var state = "☁️";
-    } else if (status === "Clear") {
-      var state = "🔆";
-    } else if (status === "Rain") {
-      var state = "🌧️";
-    } else if (status === "partly cloudy") {
-      var state = "⛅";
-    } else if (status === "Snow") {
-      var state = "❄️";
-    }
 
     for (let i = 0; i < section.childElementCount; i++) {
-      let kelTemp = jsonResponse.list[i].main.temp;
+      if (x == undefined) {
+        var x = 1;
+      } else if (x != undefined) {
+        x = x + 9;
+      }
+      console.log(x);
+      let status = jsonResponse.list[x].weather[0].main;
+
+      if (status === "Clouds") {
+        var state = "☁️";
+      } else if (status === "Clear") {
+        var state = "🔆";
+      } else if (status === "Rain") {
+        var state = "🌧️";
+      } else if (status === "partly cloudy") {
+        var state = "⛅";
+      } else if (status === "Snow") {
+        var state = "❄️";
+      }
+      let kelTemp = jsonResponse.list[x].main.temp;
       let f = ((kelTemp - 273) * 9) / 5 + 32;
       f = Math.floor(f);
 
-      sectionTitle[i].textContent = `${jsonResponse.list[i].dt_txt} ${state}`;
+      let date = new Date(jsonResponse.list[x].dt_txt.slice(0, 10));
+      let formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+
+      sectionTitle[i].textContent = `${formattedDate} ${state}`;
       sectionTemp[i].textContent = `Temp: ${f}F°`;
       sectionWind[
         i
-      ].textContent = `Wind: ${jsonResponse.list[i].wind.speed} MPH`;
+      ].textContent = `Wind: ${jsonResponse.list[x].wind.speed} MPH`;
       sectionHumidity[
         i
-      ].textContent = `Humidity: ${jsonResponse.list[i].main.humidity}%`;
+      ].textContent = `Humidity: ${jsonResponse.list[x].main.humidity}%`;
     }
   };
 
@@ -109,11 +124,13 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     const city = document.getElementById("city").value;
     geologicalApi(city);
+    const clear = document.getElementById("city");
+    clear.value = " ";
+    removeEventListener("click", handleClick);
   }
 
-  submitbtn.addEventListener("click", handleClick);
-
   const geologicalApi = async (city) => {
+    city = city.toLowerCase().trim();
     let cityname = city;
     console.log(cityname);
     const path = "geo/1.0/direct";
@@ -128,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
         lon = jsonResponse[0].lon;
         localStorage.setItem("lat", lat);
         localStorage.setItem("lon", lon);
+        searchHistory(city);
         mainCard();
         sectionCards();
       }
@@ -135,4 +153,22 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(Error);
     }
   };
+
+  function searchHistory(city) {
+    searchHistoryBtn[index].textContent = city;
+    searchHistoryBtn[index].addEventListener("click", handleSearchEvent);
+    if (index >= 4) {
+      index = 1;
+    } else {
+      index++;
+    }
+  }
+
+  function handleSearchEvent(e) {
+    e.preventDefault();
+    geologicalApi(e.target.textContent);
+    searchHistoryBtn[index].removeEventListener("click", handleSearchEvent);
+  }
+
+  submitbtn.addEventListener("click", handleClick);
 });
