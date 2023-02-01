@@ -1,38 +1,55 @@
 :root {
-    --blue: rgb(24, 44, 100);
-    --navy: rgb(31, 57, 94);
+  --blue: rgb(24, 44, 100);
+  --navy: rgb(31, 57, 94);
 }
-
 
 header {
-    display: flex;
-    justify-content: center;
-    color: white;
-    background-color: var(--blue);
-    height: 50px;
-    font-size: 30px;
-    
+  display: flex;
+  justify-content: center;
+  color: white;
+  background-color: var(--blue);
+  height: 60px;
+  font-size: 35px;
 }
 
-
 form {
-    float: left;
-    margin-top: 20px;
-    height: 550px;
+  float: left;
+  margin-top: 25px;
+  height: 550px;
+  margin-left: 5px;
+}
+
+.previous-search {
+  max-width: fit-content;
+  justify-content: center;
+  margin-top: 70px;
+  margin-left: 1px;
+}
+
+.previous-search .btn {
+  margin-top: 2px;
 }
 
 main .card {
-    margin-left:10px;
-    margin-top: 20px;
-    height: 300px;
+  margin-left: 15px;
+  margin-top: 20px;
+  height: 300px;
+  font-size: 25px;
 }
 
 section .card {
-    background-color: var(--navy);
-    margin-left: 15px;
-    color: white;
+  background-color: var(--navy);
+  margin-left: 15px;
+  color: white;
+  margin-top: 10px;
 }
 
-
-
-
+@media screen and (max-width: 1000px) {
+  #give-row {
+    max-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 250px;
+  }
+}

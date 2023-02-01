@@ -9,10 +9,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const endpoint = "https://api.openweathermap.org/";
   const apiKey = "6f9ea20be5ffff67f64770cd3b4ad14c";
 
-  let lat = 33.74;
-  let lon = -84.38;
+  let lat = "";
+  let lon = "";
 
   const apiEngine = async () => {
+    if (localStorage.getItem("lat") && localStorage.getItem("lon")) {
+      lat = localStorage.getItem("lat");
+      lon = localStorage.getItem("lon");
+    } else {
+      lat = 33.74;
+      lon = -84.38;
+    }
+
     const path = "data/2.5/forecast";
     const queryParams = `?lat=${lat}&lon=${lon}&appid=${apiKey}`;
     const url = `${endpoint}${path}${queryParams}`;
@@ -49,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let f = ((kelTemp - 273) * 9) / 5 + 32;
     f = Math.floor(f);
 
-    title.textContent = `${jsonResponse.city.name} ${state}`;
+    title.textContent = `${jsonResponse.city.name} (Today) ${state}`;
     temp.textContent = `Temp: ${f}F°`;
     wind.textContent = `Wind: ${jsonResponse.list[0].wind.speed} MPH`;
     humidity.textContent = ` Humidity: ${jsonResponse.list[0].main.humidity}%`;
@@ -84,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let f = ((kelTemp - 273) * 9) / 5 + 32;
       f = Math.floor(f);
 
-      sectionTitle[i].textContent = `${jsonResponse.list[i].dt} ${state}`;
+      sectionTitle[i].textContent = `${jsonResponse.list[i].dt_txt} ${state}`;
       sectionTemp[i].textContent = `Temp: ${f}F°`;
       sectionWind[
         i
@@ -118,6 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
         let jsonResponse = await response.json();
         lat = jsonResponse[0].lat;
         lon = jsonResponse[0].lon;
+        localStorage.setItem("lat", lat);
+        localStorage.setItem("lon", lon);
         mainCard();
         sectionCards();
       }

@@ -19,16 +19,24 @@
       <h1>Weather Dashboard</h1>
     </header>
 
-    <form class="col-2">
+    <div id='give-row'>
+    <form class="col-lg-2 col-8">
       <label for="city"><h2>Search a city:</h2></label>
       <input type="text" id="city" name="city" />
       <input id="submit" class="btn btn-primary" type="submit" value="Submit" />
+      <div class="previous-search row"> 
+        <button class="btn btn-secondary">test</button>
+        <button class="btn btn-secondary">test</button>
+        <button class="btn btn-secondary">test</button>
+        <button class="btn btn-secondary">test</button>
+        </div>
     </form>
+  </div>
 
     <main class="row">
       <div class="card col-11">
         <div class="card-body">
-          <h5 class="card-title" id="main-card-title">Card title</h5>
+          <h2 class="card-title" id="main-card-title">Card title</h5>
           <ul>
             <li id="main-card-temp">temp:</li>
             <li id="main-card-wind">wind:</li>
@@ -40,9 +48,10 @@
 
     <br />
 
+
     <section id="section" class="row">
       <h2>5-Day Forecast:</h2>
-      <div class="card col-2">
+      <div class="card col-lg-2 col-10">
         <div class="card-body">
           <h5 class="card-date">Card Date</h5>
           <ul>
@@ -52,7 +61,7 @@
           </ul>
         </div>
       </div>
-      <div class="card col-2">
+      <div class="card col-lg-2 col-10">
         <div class="card-body">
           <h5 class="card-date">Card Date</h5>
           <ul>
@@ -62,7 +71,7 @@
           </ul>
         </div>
       </div>
-      <div class="card col-2">
+      <div class="card col-lg-2 col-10">
         <div class="card-body">
           <h5 class="card-date">Card Date</h5>
           <ul>
@@ -72,7 +81,7 @@
           </ul>
         </div>
       </div>
-      <div class="card col-2">
+      <div class="card col-lg-2 col-10">
         <div class="card-body">
           <h5 class="card-date">Card Date</h5>
           <ul>
@@ -82,7 +91,7 @@
           </ul>
         </div>
       </div>
-      <div class="card col-2">
+      <div class="card col-lg-2 col-10">
         <div class="card-body">
           <h5 class="card-date">Card Date</h5>
           <ul>
