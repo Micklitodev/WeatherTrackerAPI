@@ -1,6 +1,7 @@
 :root {
   --blue: rgb(24, 44, 100);
   --navy: rgb(31, 57, 94);
+  --charcoal: rgb(74, 74, 74);
 }
 
 header {
@@ -35,7 +36,7 @@ form input {
 .previous-search {
   width: 203px;
   margin-top: 50px;
-  border: solid grey;
+  border-top: solid 1px var(--charcoal);
   padding: 5px;
 }
 
