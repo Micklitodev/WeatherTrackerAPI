@@ -126,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
     geologicalApi(city);
     const clear = document.getElementById("city");
     clear.value = " ";
-    removeEventListener("click", handleClick);
   }
 
   const geologicalApi = async (city) => {
@@ -155,27 +154,19 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 
+
   if(!localStorage.getItem(1)) {
-    searchHistoryBtn[1].textContent = localStorage.setItem(1, 'atlanta');
-    searchHistoryBtn[2].textContent = localStorage.setItem(2, 'miami');
-    searchHistoryBtn[3].textContent = localStorage.setItem(3, 'cancun');
-    searchHistoryBtn[4].textContent = localStorage.setItem(4, 'anchorage'); 
-    searchHistoryBtn[1].textContent = localStorage.getItem(1);
-    searchHistoryBtn[2].textContent = localStorage.getItem(2);
-    searchHistoryBtn[3].textContent = localStorage.getItem(3);
-    searchHistoryBtn[4].textContent = localStorage.getItem(4); 
-  } else {
-    searchHistoryBtn[1].textContent = localStorage.getItem(1);
-    searchHistoryBtn[2].textContent = localStorage.getItem(2);
-    searchHistoryBtn[3].textContent = localStorage.getItem(3);
-    searchHistoryBtn[4].textContent = localStorage.getItem(4); 
-    
-  }
+     localStorage.setItem(1, searchHistoryBtn[1].textContent);
+     localStorage.setItem(2, searchHistoryBtn[2].textContent);
+     localStorage.setItem(3, searchHistoryBtn[3].textContent);
+     localStorage.setItem(4, searchHistoryBtn[4].textContent);
+     
+
+  } 
 
   function searchHistory(city) {
     searchHistoryBtn[index].textContent = city;
-    localStorage.setItem(index, searchHistoryBtn[index].textContent);
-    searchHistoryBtn[index].addEventListener("click", handleSearchEvent);
+    localStorage.setItem(index, searchHistoryBtn[index].textContent) 
     if (index >= 4) {
       index = 1;
     } else {
@@ -183,11 +174,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function handleSearchEvent(e) {
-    e.preventDefault();
-    geologicalApi(e.target.textContent);
-    searchHistoryBtn[index].removeEventListener("click", handleSearchEvent);
-  }
+
+  searchHistoryBtn.forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const city = btn.textContent;
+      geologicalApi(city);
+    });
+  });
 
   submitbtn.addEventListener("click", handleClick);
 });
