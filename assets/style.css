@@ -1,9 +1,12 @@
+/* root variables */
 :root {
   --blue: rgb(24, 44, 100);
   --navy: rgb(31, 57, 94);
   --charcoal: rgb(74, 74, 74);
 }
 
+
+/* header styles */
 header {
   display: flex;
   justify-content: center;
@@ -13,6 +16,8 @@ header {
   font-size: 35px;
 }
 
+
+/* form styles (search form) */
 form {
   float: left;
   margin-top: 25px;
@@ -28,11 +33,8 @@ form input {
   margin-top: 5px;
 }
 
-#error-message {
-  display: none;
-  color: red;
-}
 
+/* search history styles */
 .previous-search {
   width: 203px;
   margin-top: 50px;
@@ -44,6 +46,8 @@ form input {
   margin-top: 2px;
 }
 
+
+/* maincards(todays) weather forecast styles */
 main .card {
   margin-left: 15px;
   margin-top: 20px;
@@ -51,6 +55,8 @@ main .card {
   font-size: 25px;
 }
 
+
+/* sectioncard(5dayforecast) weather forecast styles */
 section .card {
   background-color: var(--navy);
   margin-left: 15px;
@@ -58,6 +64,8 @@ section .card {
   margin-top: 10px;
 }
 
+
+/* media queries for veiwport changes */
 @media screen and (max-width: 1000px) {
   #give-row {
     max-height: 100px;

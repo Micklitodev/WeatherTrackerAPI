@@ -1,5 +1,9 @@
+// wrapper to prevent js from loading prior to html content
+
 document.addEventListener("DOMContentLoaded", function () {
-  const submitbtn = document.getElementById("submit");
+
+  // global variables -------------------------------------
+  const submitBtn = document.getElementById("submit");
 
   let title = document.getElementById("main-card-title");
   let temp = document.getElementById("main-card-temp");
@@ -14,6 +18,17 @@ document.addEventListener("DOMContentLoaded", function () {
   let lat = "";
   let lon = "";
 
+
+  // Global if checks local storage to assign defaults prior app being used
+  if (!localStorage.getItem(1)) {
+    localStorage.setItem(1, searchHistoryBtn[1].textContent);
+    localStorage.setItem(2, searchHistoryBtn[2].textContent);
+    localStorage.setItem(3, searchHistoryBtn[3].textContent);
+    localStorage.setItem(4, searchHistoryBtn[4].textContent);
+  }
+
+
+  // apiEngine fetches the weather data with longitude and latitiude
   const apiEngine = async () => {
     if (localStorage.getItem("lat") && localStorage.getItem("lon")) {
       lat = localStorage.getItem("lat");
@@ -38,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+
+  // maincard handles the main cards/ todays weather data dislayed gets data from instantiation of apiEngine
   const mainCard = async () => {
     let jsonResponse = await apiEngine();
     let status = jsonResponse.list[0].weather[0].main;
@@ -58,14 +75,18 @@ document.addEventListener("DOMContentLoaded", function () {
     let kelTemp = jsonResponse.list[0].main.temp;
     let f = ((kelTemp - 273) * 9) / 5 + 32;
     f = Math.floor(f);
-
-    title.textContent = `${jsonResponse.city.name} (Today) ${state}`;
+    
+    let date = (jsonResponse.list[0].dt_txt.slice(0, 10));
+   
+    title.textContent = `${jsonResponse.city.name} ${date} ${state}`;
     temp.textContent = `Temp: ${f}F°`;
     wind.textContent = `Wind: ${jsonResponse.list[0].wind.speed} MPH`;
     humidity.textContent = ` Humidity: ${jsonResponse.list[0].main.humidity}%`;
   };
   mainCard();
 
+
+  // section card handles the section/5dayforecast weather data gets data from instantiation of apiEngine
   const sectionCards = async () => {
     let section = document.getElementById("section");
 
@@ -100,14 +121,9 @@ document.addEventListener("DOMContentLoaded", function () {
       let f = ((kelTemp - 273) * 9) / 5 + 32;
       f = Math.floor(f);
 
-      let date = new Date(jsonResponse.list[x].dt_txt.slice(0, 10));
-      let formattedDate = date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      });
+      let date = (jsonResponse.list[x + 1].dt_txt.slice(0, 10));
 
-      sectionTitle[i].textContent = `${formattedDate} ${state}`;
+      sectionTitle[i].textContent = `${date} ${state}`;
       sectionTemp[i].textContent = `Temp: ${f}F°`;
       sectionWind[
         i
@@ -117,17 +133,10 @@ document.addEventListener("DOMContentLoaded", function () {
       ].textContent = `Humidity: ${jsonResponse.list[x].main.humidity}%`;
     }
   };
-
   sectionCards();
 
-  function handleClick(e) {
-    e.preventDefault();
-    const city = document.getElementById("city").value;
-    geologicalApi(city);
-    const clear = document.getElementById("city");
-    clear.value = " ";
-  }
 
+  //geologicalApi fetches longitude and latitude inputs and sets them to local storage to be used by apiEngine
   const geologicalApi = async (city) => {
     city = city.toLowerCase().trim();
     let cityname = city;
@@ -155,18 +164,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  if(!localStorage.getItem(1)) {
-     localStorage.setItem(1, searchHistoryBtn[1].textContent);
-     localStorage.setItem(2, searchHistoryBtn[2].textContent);
-     localStorage.setItem(3, searchHistoryBtn[3].textContent);
-     localStorage.setItem(4, searchHistoryBtn[4].textContent);
-     
+  // handleClick lets city = the value of the element then calls geologicalAPI with an argmuent of city so that
+  // it can take the data convert it to lon lat and send it to api engine where cards will render it.
+  function handleClick(e) {
+    e.preventDefault();
+    const city = document.getElementById("city").value;
+    geologicalApi(city);
+    const clear = document.getElementById("city");
+    clear.value = " ";
+  }
 
-  } 
 
+  // sets search history to local storage and text content for each btn
   function searchHistory(city) {
     searchHistoryBtn[index].textContent = city;
-    localStorage.setItem(index, searchHistoryBtn[index].textContent) 
+    localStorage.setItem(index, searchHistoryBtn[index].textContent);
     if (index >= 4) {
       index = 1;
     } else {
@@ -175,13 +187,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  searchHistoryBtn.forEach(btn => {
-    btn.addEventListener("click", e => {
+  // addes event listner for each btnclass prevents default of submit and calls gelogical api with city as an argument.
+  searchHistoryBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
       const city = btn.textContent;
       geologicalApi(city);
     });
   });
 
-  submitbtn.addEventListener("click", handleClick);
+  
+  //adds event listener to submitbtn element which calls handleClick function when clicked
+  submitBtn.addEventListener("click", handleClick);
 });
